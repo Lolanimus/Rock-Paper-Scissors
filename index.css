@@ -1,0 +1,22 @@
+
+body {
+    display: flex;
+    box-sizing: border-box;
+    height: auto;
+    margin-top: 400px;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-bottom: 400px;
+}
+
+.buttons {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+}
+
+button {
+    padding: 16px 32px;
+    font-size: 64px;
+}
