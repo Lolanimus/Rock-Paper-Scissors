@@ -5,6 +5,8 @@ let num;
 let userResult = 0;
 let compResult = 0;
 let numOfPlayedGames = 0;
+let results = document.querySelector(".results");
+const restartButton = document.createElement('button');
 
 function rock() {
     playerSelectionInt = 0;
@@ -43,47 +45,63 @@ function scissors() {
 }
 
 function compareResults() {
-    if(numOfPlayedGames < 3) {
+    if(numOfPlayedGames <= 4) {
         if(num === 1) {
             numOfPlayedGames++;
             userResult += num;
-            console.log("You have won! Play another time. " + `You: ${userResult} Machine: ${compResult}`);
+            results.textContent = ("You have won! Play another time. " + `You: ${userResult} Machine: ${compResult}`);
         } 
         if(num === 0) {
             numOfPlayedGames++;
-            console.log("Draw! Try Again. " + `You: ${userResult} Machine: ${compResult}`);
+            results.textContent = ("Draw! Try Again. " + `You: ${userResult} Machine: ${compResult}`);
         } 
         if(num === -1) {
             numOfPlayedGames++;
             compResult -= num;
-            console.log("You have lost! Try again. " + `You: ${userResult} Machine: ${compResult}`);
+            results.textContent = ("You have lost! Try again. " + `You: ${userResult} Machine: ${compResult}`);
         }
-    } else {
+    } else if (numOfPlayedGames === 5) {
         if(num === 1) {
             userResult += num;
             if(userResult > compResult) {
-                console.log("You have won the entire game! Congratulations!" + ` You: ${userResult} Machine: ${compResult}`);
+                results.textContent = ("You have won the entire game! Congratulations!" + ` You: ${userResult} Machine: ${compResult}`);
             } else if (userResult < compResult) {
-                console.log("You have lost the entire game! Sorry..." + ` You: ${userResult} Machine: ${compResult}`);
+                results.textContent = ("You have lost the entire game! Sorry..." + ` You: ${userResult} Machine: ${compResult}`);
             } else if (userResult === compResult) {
-                console.log("Draw! The game has ended!" + ` You: ${userResult} Machine: ${compResult}`)
+                results.textContent = ("Draw! The game has ended!" + ` You: ${userResult} Machine: ${compResult}`)
             }
+            numOfPlayedGames++;
         } else if(num === -1) {
             compResult -= num;
             if(userResult > compResult) {
-                console.log("You have won the entire game! Congratulations!" + ` You: ${userResult} Machine: ${compResult}`);
+                results.textContent = ("You have won the entire game! Congratulations!" + ` You: ${userResult} Machine: ${compResult}`);
             } else if (userResult < compResult) {
-                console.log("You have lost the entire game! Sorry..." + ` You: ${userResult} Machine: ${compResult}`);
+                results.textContent = ("You have lost the entire game! Sorry..." + ` You: ${userResult} Machine: ${compResult}`);
             } else if (userResult === compResult) {
-                console.log("Draw! The game has ended!" + ` You: ${userResult} Machine: ${compResult}`                                              )
+                results.textContent = ("Draw! The game has ended!" + ` You: ${userResult} Machine: ${compResult}`                                              )
             }
-        } else if(num === 0 & userResult > compResult) {
-            console.log("Draw! But you have won the entire game! Congratulations!" + ` You: ${userResult} Machine: ${compResult}`);
-        } else if(num === 0 & userResult < compResult) {
-            console.log("Draw! You have lost the entire game!" + ` You: ${userResult} Machine: ${compResult}`);
-        } else if(num === 0 & userResult === compResult) {
-            console.log("Draw! The game has ended!" + ` You: ${userResult} Machine: ${compResult}`);
+            numOfPlayedGames++;
+        } else {
+            if(userResult > compResult) {
+                results.textContent = ("Draw! But you have won the entire game! Congratulations!" + ` You: ${userResult} Machine: ${compResult}`);
+            } else if (userResult < compResult) {
+                results.textContent = ("Draw! You have lost the entire game!" + ` You: ${userResult} Machine: ${compResult}`);
+            } else if (userResult === compResult) {
+                results.textContent = ("Draw! The game has ended!" + ` You: ${userResult} Machine: ${compResult}`);
+            }
+            numOfPlayedGames++;
         }
+        restartButton.textContent = "Restart?";
+        document.body.appendChild(restartButton);
+        restartButton.addEventListener("click", () => {
+            if(document.body.children.length > 2){            
+                document.body.removeChild(restartButton);
+            }
+            numOfPlayedGames = 0;
+            userResult = 0;
+            compResult = 0;
+            results.textContent = "Here will be the results of the game. Click on of the buttons."
+        });
     }
 }
 
@@ -113,22 +131,3 @@ function listenForButton(nodeList) {
 }
 
 listenForButton(buttons);
-
-// buttons.forEach(e => {
-//     e.addEventListener("click", e => {
-//         switch (e.target.getAttribute('class')) {
-//             case "rock":
-//                 playRound(0);
-//                 console.log("rock");
-//                 break;
-//             case "paper":
-//                 playRound(1);
-//                 console.log("paper");
-//                 break;
-//             case "scissors":
-//                 playRound(2);
-//                 console.log("scissors");
-//                 break;
-//         }
-//     })
-// })
